@@ -2,9 +2,12 @@ package com.example.apple.votingapp.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,7 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ResetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class ResetPasswordFragment extends Fragment implements View.OnClickListener {
 
     private EditText inputEmail;
     private Button btnReset, btnBack;
@@ -24,19 +27,22 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     private ProgressBar progressBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_reset_password, container, false);
+    }
 
-        inputEmail = findViewById(R.id.email);
-        btnReset = findViewById(R.id.btn_reset_password);
-        btnBack = findViewById(R.id.btn_back);
-        progressBar = findViewById(R.id.progressBar);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        inputEmail = view.findViewById(R.id.email);
+        btnReset = view.findViewById(R.id.btn_reset_password);
+        btnBack = view.findViewById(R.id.btn_back);
+        progressBar = view.findViewById(R.id.progressBar);
 
         auth = FirebaseAuth.getInstance();
 
         btnBack.setOnClickListener(this);
-
         btnReset.setOnClickListener(this);
     }
 
@@ -44,13 +50,15 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
-                finish();
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                }
                 break;
             case R.id.btn_reset_password:
                 String email = inputEmail.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplication(), Constants.ENTER_EMAIL, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Constants.ENTER_EMAIL, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -60,9 +68,9 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(ResetPasswordActivity.this, Constants.RESET_EMAIL_SENT, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), Constants.RESET_EMAIL_SENT, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(ResetPasswordActivity.this, Constants.RESET_EMAIL_FAILED, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), Constants.RESET_EMAIL_FAILED, Toast.LENGTH_SHORT).show();
                                 }
 
                                 progressBar.setVisibility(View.GONE);

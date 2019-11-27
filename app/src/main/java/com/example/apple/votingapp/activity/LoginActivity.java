@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
@@ -57,12 +57,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_signup:
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
                 break;
             case R.id.btn_reset_password:
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                        .add(R.id.login_activity_container, new ResetPasswordFragment()).addToBackStack(Constants.FRAGMENT_RESET_PASSWORD).commit();
                 break;
             case R.id.btn_login:
                 String email = inputEmail.getText().toString();

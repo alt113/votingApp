@@ -14,4 +14,5 @@ public class Constants {
     public static final String ACCOUNT_DELETE_FAIL = "Failed to delete your account!";
     public static final String ACCOUNT_SIGNUP_SUCCESS = "You are successfully registered";
     public static final String ACCOUNT_SIGNUP_FAIL = "Authentication failed.";
+    public static final String FRAGMENT_RESET_PASSWORD = "ResetPasswordFragment";
 }
