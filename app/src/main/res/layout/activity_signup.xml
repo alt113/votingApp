@@ -13,15 +13,15 @@
 
 
         <ImageView
-            android:layout_width="@dimen/logo_w_h"
-            android:layout_height="@dimen/logo_w_h"
+            android:layout_width="@dimen/width_height_logo_medium"
+            android:layout_height="@dimen/width_height_logo_medium"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
             android:src="@mipmap/ic_launcher" />
 
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
@@ -32,7 +32,7 @@
 
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
@@ -46,7 +46,7 @@
 
 
         <Button
-            android:id="@+id/sign_up_button"
+            android:id="@+id/button_sign_up"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_reset_password"
+            android:id="@+id/button_reset_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
@@ -69,7 +69,7 @@
         <!-- Link to Login Screen -->
 
         <Button
-            android:id="@+id/sign_in_button"
+            android:id="@+id/button_sign_in"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
@@ -81,7 +81,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progress_bar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center|bottom"

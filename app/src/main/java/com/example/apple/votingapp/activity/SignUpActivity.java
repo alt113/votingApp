@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.apple.votingapp.R;
+import com.example.apple.votingapp.fragment.ResetPasswordFragment;
 import com.example.apple.votingapp.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText inputEmail, inputPassword;
-    private Button btnSignIn, btnSignUp, btnResetPassword;
+    protected Button buttonSignIn, buttonSignUp, buttonResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -30,26 +31,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //Get Firebase auth instance
+        //Get FireBase auth instance
         auth = FirebaseAuth.getInstance();
 
-        btnSignIn = findViewById(R.id.sign_in_button);
-        btnSignUp = findViewById(R.id.sign_up_button);
-        inputEmail = findViewById(R.id.email);
-        inputPassword = findViewById(R.id.password);
-        progressBar = findViewById(R.id.progressBar);
-        btnResetPassword = findViewById(R.id.btn_reset_password);
+        buttonSignIn = findViewById(R.id.button_sign_in);
+        buttonSignUp = findViewById(R.id.button_sign_up);
+        buttonResetPassword = findViewById(R.id.button_reset_password);
+        inputEmail = findViewById(R.id.input_email);
+        inputPassword = findViewById(R.id.input_password);
+        progressBar = findViewById(R.id.progress_bar);
 
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignUpActivity.this, ResetPasswordFragment.class));
-            }
-        });
-
-        btnSignIn.setOnClickListener(this);
-
-        btnSignUp.setOnClickListener(this);
+        buttonSignIn.setOnClickListener(this);
+        buttonSignUp.setOnClickListener(this);
+        buttonResetPassword.setOnClickListener(this);
     }
 
     @Override
@@ -61,10 +55,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sign_in_button:
+            case R.id.button_reset_password:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                        .add(R.id.login_activity_container, new ResetPasswordFragment()).addToBackStack(Constants.FRAGMENT_RESET_PASSWORD).commit();
+                break;
+            case R.id.button_sign_in:
                 finish();
                 break;
-            case R.id.sign_up_button:
+            case R.id.button_sign_up:
 
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();

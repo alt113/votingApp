@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.apple.votingapp.R;
+import com.example.apple.votingapp.fragment.ResetPasswordFragment;
 import com.example.apple.votingapp.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,13 +24,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset;
+    protected Button buttonSignUp, buttonLogin, buttonReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Get Firebase auth instance
+        // set the view now
+        setContentView(R.layout.activity_login);
+
+        //Get FireBase auth instance
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
@@ -37,37 +41,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
 
-        // set the view now
-        setContentView(R.layout.activity_login);
+        inputEmail = findViewById(R.id.input_email);
+        inputPassword = findViewById(R.id.input_password);
+        progressBar = findViewById(R.id.progress_bar);
+        buttonSignUp = findViewById(R.id.button_signup);
+        buttonLogin = findViewById(R.id.button_login);
+        buttonReset = findViewById(R.id.button_reset_password);
 
-        inputEmail = findViewById(R.id.email);
-        inputPassword = findViewById(R.id.password);
-        progressBar = findViewById(R.id.progressBar);
-        btnSignup = findViewById(R.id.btn_signup);
-        btnLogin = findViewById(R.id.btn_login);
-        btnReset = findViewById(R.id.btn_reset_password);
-
-        //Get Firebase auth instance
+        //Get FireBase auth instance
         auth = FirebaseAuth.getInstance();
 
-        btnLogin.setOnClickListener(this);
-        btnReset.setOnClickListener(this);
-        btnSignup.setOnClickListener(this);
+        buttonLogin.setOnClickListener(this);
+        buttonReset.setOnClickListener(this);
+        buttonSignUp.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_signup:
+            case R.id.button_signup:
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
                 break;
-            case R.id.btn_reset_password:
+            case R.id.button_reset_password:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
                         .add(R.id.login_activity_container, new ResetPasswordFragment()).addToBackStack(Constants.FRAGMENT_RESET_PASSWORD).commit();
                 break;
-            case R.id.btn_login:
+            case R.id.button_login:
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     if (password.length() < 6) {
                                         inputPassword.setError(getString(R.string.minimum_password));
                                     } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(LoginActivity.this, Constants.AUTH_FAIL, Toast.LENGTH_LONG).show();
                                     }
                                 } else {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

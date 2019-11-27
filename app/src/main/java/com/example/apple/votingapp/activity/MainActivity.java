@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         oldEmail = findViewById(R.id.old_email);
         newEmail = findViewById(R.id.new_email);
-        password = findViewById(R.id.password);
+        password = findViewById(R.id.input_password);
         newPassword = findViewById(R.id.newPassword);
 
         oldEmail.setVisibility(View.GONE);
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendEmail.setVisibility(View.GONE);
         remove.setVisibility(View.GONE);
 
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progress_bar);
 
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);

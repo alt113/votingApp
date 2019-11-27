@@ -15,4 +15,5 @@ public class Constants {
     public static final String ACCOUNT_SIGNUP_SUCCESS = "You are successfully registered";
     public static final String ACCOUNT_SIGNUP_FAIL = "Authentication failed.";
     public static final String FRAGMENT_RESET_PASSWORD = "ResetPasswordFragment";
+    public static final String AUTH_FAIL = "Authentication failed, check your email and password or sign up";
 }

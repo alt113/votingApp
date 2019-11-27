@@ -1,4 +1,4 @@
-package com.example.apple.votingapp.activity;
+package com.example.apple.votingapp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ResetPasswordFragment extends Fragment implements View.OnClickListener {
 
     private EditText inputEmail;
-    private Button btnReset, btnBack;
+    protected Button buttonReset, buttonBack;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
 
@@ -35,26 +35,26 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        inputEmail = view.findViewById(R.id.email);
-        btnReset = view.findViewById(R.id.btn_reset_password);
-        btnBack = view.findViewById(R.id.btn_back);
-        progressBar = view.findViewById(R.id.progressBar);
+        inputEmail = view.findViewById(R.id.input_email);
+        buttonReset = view.findViewById(R.id.button_reset_password);
+        buttonBack = view.findViewById(R.id.button_back);
+        progressBar = view.findViewById(R.id.progress_bar);
 
         auth = FirebaseAuth.getInstance();
 
-        btnBack.setOnClickListener(this);
-        btnReset.setOnClickListener(this);
+        buttonBack.setOnClickListener(this);
+        buttonReset.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_back:
+            case R.id.button_back:
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().popBackStackImmediate();
                 }
                 break;
-            case R.id.btn_reset_password:
+            case R.id.button_reset_password:
                 String email = inputEmail.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -67,12 +67,9 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getContext(), Constants.RESET_EMAIL_SENT, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getContext(), Constants.RESET_EMAIL_FAILED, Toast.LENGTH_SHORT).show();
-                                }
-
+                                Toast.makeText(getContext(),
+                                        task.isSuccessful() ? Constants.RESET_EMAIL_SENT : Constants.RESET_EMAIL_FAILED,
+                                        Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
