@@ -3,5 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
-    <dimen name="width_height_logo_medium">100dp</dimen>
+    <dimen name="width_height_logo_large">100dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_large">20dip</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="width_height_small">30dp</dimen>
 </resources>

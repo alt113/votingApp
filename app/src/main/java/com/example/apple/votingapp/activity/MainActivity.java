@@ -84,21 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         btnChangeEmail.setOnClickListener(this);
-
         changeEmail.setOnClickListener(this);
-
         btnChangePassword.setOnClickListener(this);
-
         changePassword.setOnClickListener(this);
-
         btnSendResetEmail.setOnClickListener(this);
-
         sendEmail.setOnClickListener(this);
-
         btnRemoveUser.setOnClickListener(this);
-
         signOut.setOnClickListener(this);
-
     }
 
     //sign out method
