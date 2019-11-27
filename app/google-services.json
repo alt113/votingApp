@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "107934565474",
+    "firebase_url": "https://votingapp-d5da3.firebaseio.com",
+    "project_id": "votingapp-d5da3",
+    "storage_bucket": "votingapp-d5da3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107934565474:android:f08f3c8231a13e16cdfd3b",
+        "android_client_info": {
+          "package_name": "com.example.apple.votingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107934565474-3qmlnkclki9cp0es1mafvquiq8ers6qb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apple.votingapp",
+            "certificate_hash": "66b013885d2e4adb87e5639cea7befa1a635b9cf"
+          }
+        },
+        {
+          "client_id": "107934565474-mjtjeukhmhikca4ejur3o34ib9oq7gk4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACd2MDM0sINohf9zPfvsgITaTC8m_6Dn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107934565474-mjtjeukhmhikca4ejur3o34ib9oq7gk4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
