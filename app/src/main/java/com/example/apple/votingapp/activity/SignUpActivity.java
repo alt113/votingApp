@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText inputEmail, inputPassword;
@@ -82,15 +84,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_SUCCESS, Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_FAIL,
+                                    Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_FAIL + Objects.requireNonNull(task.getException()).getLocalizedMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_SUCCESS, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                     finish();
                                 }
