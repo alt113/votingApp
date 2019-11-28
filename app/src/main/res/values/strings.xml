@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">votingApp</string>
+    <string name="app_name">Voted-In</string>
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
@@ -16,7 +16,7 @@
     <string name="hint_name">Fullname</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
-    <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="btn_link_to_login">Already registered? <b>Login</b></string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_reset_password">Reset Password</string>
@@ -29,4 +29,8 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="prompt_password">Whatever</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="btn_signup">signup</string>
+    <string name="hint_repeat_password">Repeat Password</string>
+    <string name="cancel">cancel</string>
 </resources>

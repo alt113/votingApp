@@ -8,4 +8,6 @@
     <dimen name="margin_large">20dip</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="width_height_small">30dp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
 </resources>

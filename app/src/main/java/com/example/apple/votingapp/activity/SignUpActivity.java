@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.apple.votingapp.R;
-import com.example.apple.votingapp.fragment.ResetPasswordFragment;
 import com.example.apple.votingapp.utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText inputEmail, inputPassword;
-    protected Button buttonSignIn, buttonSignUp, buttonResetPassword;
+    protected Button buttonSignUp;
+    protected View buttonSignIn;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -36,14 +36,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         buttonSignIn = findViewById(R.id.button_sign_in);
         buttonSignUp = findViewById(R.id.button_sign_up);
-        buttonResetPassword = findViewById(R.id.button_reset_password);
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
         progressBar = findViewById(R.id.progress_bar);
 
         buttonSignIn.setOnClickListener(this);
         buttonSignUp.setOnClickListener(this);
-        buttonResetPassword.setOnClickListener(this);
     }
 
     @Override
@@ -55,12 +53,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_reset_password:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
-                        .add(R.id.login_activity_container, new ResetPasswordFragment()).addToBackStack(Constants.FRAGMENT_RESET_PASSWORD).commit();
-                break;
             case R.id.button_sign_in:
                 finish();
                 break;
