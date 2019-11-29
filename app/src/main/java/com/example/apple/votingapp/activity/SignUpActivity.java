@@ -18,9 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inputRepeatPassword;
     protected Button buttonSignUp;
     protected View buttonSignIn;
     private ProgressBar progressBar;
@@ -38,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         buttonSignUp = findViewById(R.id.button_sign_up);
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
+        inputRepeatPassword = findViewById(R.id.input_repeat_password);
         progressBar = findViewById(R.id.progress_bar);
 
         buttonSignIn.setOnClickListener(this);
@@ -58,39 +61,41 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.button_sign_up:
 
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-
-                if (TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(inputEmail.getText())) {
                     Toast.makeText(getApplicationContext(), Constants.ENTER_EMAIL, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(inputPassword.getText()) || TextUtils.isEmpty(inputRepeatPassword.getText())) {
                     Toast.makeText(getApplicationContext(), Constants.ENTER_PASSWORD, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (password.length() < 6) {
+                if (inputPassword.getText().toString().trim().length() < 6) {
                     Toast.makeText(getApplicationContext(), Constants.PASSWORD_TOO_SHORT, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!inputPassword.getText().toString().equals(inputRepeatPassword.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), Constants.PASSWORD_INCOMPATIBLE, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
-                auth.createUserWithEmailAndPassword(email, password)
+                auth.createUserWithEmailAndPassword(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim())
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_SUCCESS, Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_FAIL,
+                                    Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_FAIL + Objects.requireNonNull(task.getException()).getLocalizedMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    Toast.makeText(SignUpActivity.this, Constants.ACCOUNT_SIGNUP_SUCCESS, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                     finish();
                                 }

@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.button_reset_password:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top, R.anim.enter_from_top, R.anim.exit_to_bottom)
                         .add(R.id.login_activity_container, new ResetPasswordFragment()).addToBackStack(Constants.FRAGMENT_RESET_PASSWORD).commit();
                 break;
             case R.id.button_login:

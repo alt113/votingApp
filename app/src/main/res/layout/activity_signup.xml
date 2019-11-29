@@ -86,14 +86,15 @@
 
             <TextView
                 android:id="@+id/button_sign_in"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
                 android:background="@null"
+                android:padding="@dimen/margin_small"
                 android:text="@string/btn_link_to_login"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_small" />
 
         </LinearLayout>
