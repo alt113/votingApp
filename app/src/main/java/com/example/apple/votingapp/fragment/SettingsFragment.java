@@ -102,6 +102,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         sendEmail.setOnClickListener(this);
         buttonRemoveUser.setOnClickListener(this);
         signOut.setOnClickListener(this);
+        remove.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
     }
 
@@ -219,9 +220,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), Constants.ACCOUNT_DELETE_SUCCESS, Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getContext(), SignUpActivity.class));
                                         if (getActivity() != null) {
-                                            getActivity().getSupportFragmentManager().popBackStackImmediate();
+                                            startActivity(new Intent(getActivity(), SignUpActivity.class));
+                                            getActivity().finish();
                                         }
                                         progressBar.setVisibility(View.GONE);
                                     } else {

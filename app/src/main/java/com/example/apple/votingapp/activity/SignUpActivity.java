@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inputRepeatPassword;
     protected Button buttonSignUp;
     protected View buttonSignIn;
     private ProgressBar progressBar;
@@ -40,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         buttonSignUp = findViewById(R.id.button_sign_up);
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
+        inputPassword = findViewById(R.id.input_repeat_password);
         progressBar = findViewById(R.id.progress_bar);
 
         buttonSignIn.setOnClickListener(this);
@@ -60,27 +61,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.button_sign_up:
 
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-
-                if (TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(inputEmail.getText())) {
                     Toast.makeText(getApplicationContext(), Constants.ENTER_EMAIL, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(inputPassword.getText()) || TextUtils.isEmpty(inputRepeatPassword.getText())) {
                     Toast.makeText(getApplicationContext(), Constants.ENTER_PASSWORD, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (password.length() < 6) {
+                if (inputPassword.getText().toString().trim().length() < 6) {
                     Toast.makeText(getApplicationContext(), Constants.PASSWORD_TOO_SHORT, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!inputPassword.getText().toString().trim().equals(inputRepeatPassword.getText().toString().trim())) {
+                    Toast.makeText(getApplicationContext(), Constants.PASSWORD_INCOMPATIBLE, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
-                auth.createUserWithEmailAndPassword(email, password)
+                auth.createUserWithEmailAndPassword(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim())
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
