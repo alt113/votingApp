@@ -15,8 +15,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
             android:padding="10dp"
             android:text="@string/settings"
             android:textColor="@android:color/white"
@@ -80,6 +80,17 @@
                         android:layout_margin="@dimen/margin_small"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_medium"
+                            android:background="@null"
+                            android:text="@string/forgot_password_msg"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_small" />
+
                         <EditText
                             android:id="@+id/old_email"
                             android:layout_width="match_parent"
@@ -99,9 +110,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:background="@drawable/white_border_transparent_bkg"
+                            android:background="@drawable/white_bkg"
                             android:text="@string/btn_send"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 
@@ -146,6 +157,17 @@
                         android:layout_margin="@dimen/margin_small"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_medium"
+                            android:background="@null"
+                            android:text="@string/new_email_msg"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_small" />
+
                         <EditText
                             android:id="@+id/new_email"
                             android:layout_width="match_parent"
@@ -165,9 +187,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:background="@drawable/white_border_transparent_bkg"
+                            android:background="@drawable/white_bkg"
                             android:text="@string/btn_change"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 
@@ -212,13 +234,24 @@
                         android:layout_margin="@dimen/margin_small"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_medium"
+                            android:background="@null"
+                            android:text="@string/change_password_msg"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_small" />
+
                         <EditText
                             android:id="@+id/input_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_small"
                             android:background="@drawable/white_transparent_bkg"
-                            android:hint="@string/prompt_password"
+                            android:hint="@string/hint_old_password"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:padding="@dimen/margin_small"
@@ -245,9 +278,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:background="@drawable/white_border_transparent_bkg"
+                            android:background="@drawable/white_bkg"
                             android:text="@string/btn_change"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 
@@ -270,7 +303,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="@dimen/margin_medium"
-                    android:text="@string/remove_user"
+                    android:text="@string/delete_your_account"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white"
@@ -291,15 +324,26 @@
                         android:layout_margin="@dimen/margin_small"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_medium"
+                            android:background="@null"
+                            android:text="@string/delete_account_msg"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_small" />
+
                         <Button
                             android:id="@+id/remove"
                             style="?android:textAppearanceSmall"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:background="@drawable/white_border_transparent_bkg"
-                            android:text="@string/btn_remove"
-                            android:textColor="@android:color/white"
+                            android:background="@drawable/white_bkg"
+                            android:text="@string/btn_delete_user_acct"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 

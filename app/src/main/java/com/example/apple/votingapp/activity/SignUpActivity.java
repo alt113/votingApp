@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         buttonSignUp = findViewById(R.id.button_sign_up);
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
-        inputPassword = findViewById(R.id.input_repeat_password);
+        inputRepeatPassword = findViewById(R.id.input_repeat_password);
         progressBar = findViewById(R.id.progress_bar);
 
         buttonSignIn.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
 
-                if (!inputPassword.getText().toString().trim().equals(inputRepeatPassword.getText().toString().trim())) {
+                if (!inputPassword.getText().toString().equals(inputRepeatPassword.getText().toString())) {
                     Toast.makeText(getApplicationContext(), Constants.PASSWORD_INCOMPATIBLE, Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -73,14 +73,15 @@
 
             <TextView
                 android:id="@+id/button_reset_password"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
                 android:background="@null"
+                android:padding="@dimen/margin_small"
                 android:text="@string/btn_forgot_password"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_small" />
 
             <!-- Link to Login Screen -->
@@ -115,14 +116,15 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
                 android:background="@null"
+                android:padding="@dimen/margin_small"
                 android:text="@string/no_account"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_small" />
 
             <Button

@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/width_height_medium"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/margin_extra_small"
+            android:src="@drawable/app_logo" />
+
         <Button
             android:id="@+id/button_settings"
             android:layout_width="@dimen/width_height_small"
