@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.apple.votingapp.R;
-import com.example.apple.votingapp.fragment.ResetPasswordFragment;
 import com.example.apple.votingapp.fragment.SettingsFragment;
 import com.example.apple.votingapp.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                        .add(R.id.main_activity_container, new SettingsFragment()).addToBackStack(Constants.FRAGMENT_SETTINGS).commit();
-
+                if (getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_SETTINGS) == null) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                            .add(R.id.main_activity_container, new SettingsFragment(), Constants.FRAGMENT_SETTINGS).addToBackStack(Constants.FRAGMENT_SETTINGS).commit();
+                }
             }
         });
 

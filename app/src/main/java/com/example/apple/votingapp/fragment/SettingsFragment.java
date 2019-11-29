@@ -22,15 +22,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 public class SettingsFragment extends Fragment implements View.OnClickListener {
-    private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut;
+    protected View buttonChangeEmail, buttonChangePassword, buttonSendResetEmail, buttonRemoveUser;
+    protected Button
+            changeEmail, changePassword, sendEmail, remove, signOut, buttonBack;
     private EditText oldEmail, newEmail, password, newPassword;
     private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private ExpandableLayout expandableLayout0, expandableLayout1, expandableLayout2, expandableLayout3;
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_settings, container, false);
@@ -38,7 +43,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        super.onViewCreated(view, savedInstanceState);
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -60,10 +65,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         };
 
-        btnChangeEmail = view.findViewById(R.id.change_email_button);
-        btnChangePassword = view.findViewById(R.id.change_password_button);
-        btnSendResetEmail = view.findViewById(R.id.sending_pass_reset_button);
-        btnRemoveUser = view.findViewById(R.id.remove_user_button);
+        buttonChangeEmail = view.findViewById(R.id.change_email_button);
+        buttonChangePassword = view.findViewById(R.id.change_password_button);
+        buttonSendResetEmail = view.findViewById(R.id.sending_pass_reset_button);
+        buttonRemoveUser = view.findViewById(R.id.remove_user_button);
+        buttonBack = view.findViewById(R.id.button_back);
         changeEmail = view.findViewById(R.id.changeEmail);
         changePassword = view.findViewById(R.id.changePass);
         sendEmail = view.findViewById(R.id.send);
@@ -75,14 +81,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         password = view.findViewById(R.id.input_password);
         newPassword = view.findViewById(R.id.newPassword);
 
-        oldEmail.setVisibility(View.GONE);
-        newEmail.setVisibility(View.GONE);
-        password.setVisibility(View.GONE);
-        newPassword.setVisibility(View.GONE);
-        changeEmail.setVisibility(View.GONE);
-        changePassword.setVisibility(View.GONE);
-        sendEmail.setVisibility(View.GONE);
-        remove.setVisibility(View.GONE);
+
+        expandableLayout0 = view.findViewById(R.id.expandable_layout_0);
+        expandableLayout1 = view.findViewById(R.id.expandable_layout_1);
+        expandableLayout2 = view.findViewById(R.id.expandable_layout_2);
+        expandableLayout3 = view.findViewById(R.id.expandable_layout_3);
+
 
         progressBar = view.findViewById(R.id.progress_bar);
 
@@ -90,28 +94,47 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             progressBar.setVisibility(View.GONE);
         }
 
-        btnChangeEmail.setOnClickListener(this);
+        buttonChangeEmail.setOnClickListener(this);
         changeEmail.setOnClickListener(this);
-        btnChangePassword.setOnClickListener(this);
+        buttonChangePassword.setOnClickListener(this);
         changePassword.setOnClickListener(this);
-        btnSendResetEmail.setOnClickListener(this);
+        buttonSendResetEmail.setOnClickListener(this);
         sendEmail.setOnClickListener(this);
-        btnRemoveUser.setOnClickListener(this);
+        buttonRemoveUser.setOnClickListener(this);
         signOut.setOnClickListener(this);
+        buttonBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.sending_pass_reset_button:
+                expandableLayout0.expand();
+                expandableLayout1.collapse();
+                expandableLayout2.collapse();
+                expandableLayout3.collapse();
+                break;
+
             case R.id.change_email_button:
-                oldEmail.setVisibility(View.GONE);
-                newEmail.setVisibility(View.VISIBLE);
-                password.setVisibility(View.GONE);
-                newPassword.setVisibility(View.GONE);
-                changeEmail.setVisibility(View.VISIBLE);
-                changePassword.setVisibility(View.GONE);
-                sendEmail.setVisibility(View.GONE);
-                remove.setVisibility(View.GONE);
+                expandableLayout0.collapse();
+                expandableLayout1.expand();
+                expandableLayout2.collapse();
+                expandableLayout3.collapse();
+                break;
+
+            case R.id.change_password_button:
+                expandableLayout0.collapse();
+                expandableLayout1.collapse();
+                expandableLayout2.expand();
+                expandableLayout3.collapse();
+                break;
+
+            case R.id.remove_user_button:
+                expandableLayout0.collapse();
+                expandableLayout1.collapse();
+                expandableLayout2.collapse();
+                expandableLayout3.expand();
                 break;
 
             case R.id.changeEmail:
@@ -135,17 +158,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     newEmail.setError("Enter email");
                     progressBar.setVisibility(View.GONE);
                 }
-                break;
-
-            case R.id.change_password_button:
-                oldEmail.setVisibility(View.GONE);
-                newEmail.setVisibility(View.GONE);
-                password.setVisibility(View.GONE);
-                newPassword.setVisibility(View.VISIBLE);
-                changeEmail.setVisibility(View.GONE);
-                changePassword.setVisibility(View.VISIBLE);
-                sendEmail.setVisibility(View.GONE);
-                remove.setVisibility(View.GONE);
                 break;
 
             case R.id.changePass:
@@ -174,17 +186,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     newPassword.setError(Constants.ENTER_PASSWORD);
                     progressBar.setVisibility(View.GONE);
                 }
-                break;
-
-            case R.id.sending_pass_reset_button:
-                oldEmail.setVisibility(View.VISIBLE);
-                newEmail.setVisibility(View.GONE);
-                password.setVisibility(View.GONE);
-                newPassword.setVisibility(View.GONE);
-                changeEmail.setVisibility(View.GONE);
-                changePassword.setVisibility(View.GONE);
-                sendEmail.setVisibility(View.VISIBLE);
-                remove.setVisibility(View.GONE);
                 break;
 
             case R.id.send:
@@ -233,6 +234,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.sign_out:
                 signOut();
+                break;
+            case R.id.button_back:
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                }
                 break;
         }
     }
