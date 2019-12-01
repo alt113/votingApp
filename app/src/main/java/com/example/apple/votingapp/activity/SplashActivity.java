@@ -54,6 +54,4 @@ public class SplashActivity extends Activity {
             auth.removeAuthStateListener(authListener);
         }
     }
-
-
 }
