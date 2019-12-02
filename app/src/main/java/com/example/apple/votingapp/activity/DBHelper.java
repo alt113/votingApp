@@ -2,6 +2,7 @@ package com.example.apple.votingapp.activity;
 
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +50,15 @@ public class DBHelper {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    public void updatePolicy(String key, Policy policy, final DataStatus dataStatus){
+        dbReference.child(key).setValue(policy).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dataStatus.DataIsUpdated();
             }
         });
     }

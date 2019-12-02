@@ -4,13 +4,15 @@ public class Policy {
 
     private String title;
     private String description;
+    private Long vote;
 
     public Policy() {
     }
 
-    public Policy(String title, String description) {
+    public Policy(String title, String description, Long vote) {
         this.title = title;
         this.description = description;
+        this.vote = vote;
     }
 
     public String getTitle() {
@@ -27,5 +29,13 @@ public class Policy {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getVote() {
+        return vote;
+    }
+
+    public void setVote(Long vote) {
+        this.vote = vote;
     }
 }
