@@ -18,5 +18,6 @@ public class Constants {
     public static final String AUTH_FAIL = "Authentication failed, check your email and password or sign up";
     public static final String FRAGMENT_SETTINGS = "SettingsFragment";
     public static final String PASSWORD_INCOMPATIBLE = "Make sure the passwords are compatible.";
+    public static final String FRAGMENT_POLL_SESSION = "PollSessionFragment";
 }
 

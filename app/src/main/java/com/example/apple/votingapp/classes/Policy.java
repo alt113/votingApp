@@ -1,4 +1,4 @@
-package com.example.apple.votingapp.activity;
+package com.example.apple.votingapp.classes;
 
 public class Policy {
 

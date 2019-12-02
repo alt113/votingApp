@@ -38,4 +38,11 @@
     <string name="delete_account_msg">This action will result in deleting your account. If you are sure you want to do so, proceed by pressing on <b>DELETE ACCOUNT</b>.</string>
     <string name="btn_delete_user_acct">Delete Account</string>
     <string name="delete_your_account">Delete Your Account</string>
+    <string name="poll_id">Poll ID</string>
+    <string name="votes">Votes:</string>
+    <string name="downvote">Downvote</string>
+    <string name="upvote">Upvote</string>
+    <string name="poll_question">Poll Question</string>
+    <string name="_0">0</string>
+    <string name="btn_start_poll_session">Start Poll Session</string>
 </resources>

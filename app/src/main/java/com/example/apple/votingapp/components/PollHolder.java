@@ -1,4 +1,4 @@
-package com.example.apple.votingapp.activity;
+package com.example.apple.votingapp.components;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,20 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.apple.votingapp.R;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.apple.votingapp.classes.Policy;
+import com.example.apple.votingapp.utils.DataBaseHelper;
 
 import java.util.List;
 
-import static java.sql.DriverManager.println;
-
-public class RecyclerView_Configuration {
+public class PollHolder {
 
     private Context mContext;
     private PolicyAdapter mPolicyAdapter;
-    public void setConfig(RecyclerView r, Context c, List<Policy> pList, List<String> kList){
+
+    public void setConfig(RecyclerView r, Context c, List<Policy> pList, List<String> kList) {
         mContext = c;
         mPolicyAdapter = new PolicyAdapter(pList, kList);
         r.setLayoutManager(new LinearLayoutManager(c));
@@ -31,7 +30,7 @@ public class RecyclerView_Configuration {
     }
 
 
-    class PolicyItemView extends RecyclerView.ViewHolder{
+    class PolicyItemView extends RecyclerView.ViewHolder {
 
         private TextView pTitle;
         private TextView pDescription;
@@ -42,15 +41,15 @@ public class RecyclerView_Configuration {
 
         private String key;
 
-        public PolicyItemView(final ViewGroup parent){
-            super(LayoutInflater.from(mContext).inflate(R.layout.policy_list_item, parent, false));
+        public PolicyItemView(final ViewGroup parent) {
+            super(LayoutInflater.from(mContext).inflate(R.layout.poll_holder, parent, false));
 
-            pTitle = (TextView) itemView.findViewById(R.id.textView1);
-            pDescription = (TextView) itemView.findViewById(R.id.textView2);
-            voteCount = (TextView) itemView.findViewById(R.id.voteCount);
+            pTitle = (TextView) itemView.findViewById(R.id.poll_id);
+            pDescription = (TextView) itemView.findViewById(R.id.poll_question);
+            voteCount = (TextView) itemView.findViewById(R.id.vote_count);
 
-            voteUp = (Button) itemView.findViewById(R.id.voteUp);
-            voteDown = (Button) itemView.findViewById(R.id.voteDown);
+            voteUp = (Button) itemView.findViewById(R.id.button_upvote);
+            voteDown = (Button) itemView.findViewById(R.id.button_downvote);
 
             voteUp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,7 +68,7 @@ public class RecyclerView_Configuration {
             });
         }
 
-        public void bind(Policy p, String key){
+        public void bind(Policy p, String key) {
             pTitle.setText(p.getTitle());
             pDescription.setText(p.getDescription());
             voteCount.setText(Long.toString(p.getVote()));
@@ -77,9 +76,9 @@ public class RecyclerView_Configuration {
             this.key = key;
         }
 
-        public void clickFunction(View view, Policy policy){
+        public void clickFunction(View view, Policy policy) {
 
-            new DBHelper().updatePolicy(key, policy, new DBHelper.DataStatus() {
+            new DataBaseHelper().updatePolicy(key, policy, new DataBaseHelper.DataStatus() {
                 @Override
                 public void DataIsLoaded(List<Policy> p, List<String> keys) {
 
@@ -103,7 +102,7 @@ public class RecyclerView_Configuration {
         }
     }
 
-    class PolicyAdapter extends RecyclerView.Adapter<PolicyItemView>{
+    class PolicyAdapter extends RecyclerView.Adapter<PolicyItemView> {
         private List<Policy> mPolicyList;
         private List<String> mKeys;
 
