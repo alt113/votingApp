@@ -20,17 +20,17 @@ import java.util.List;
 public class PollHolder {
 
     private Context mContext;
-    private PolicyAdapter mPolicyAdapter;
+    private PollAdapter mPollAdapter;
 
     public void setConfig(RecyclerView r, Context c, List<Policy> pList, List<String> kList) {
         mContext = c;
-        mPolicyAdapter = new PolicyAdapter(pList, kList);
+        mPollAdapter = new PollAdapter(pList, kList);
         r.setLayoutManager(new LinearLayoutManager(c));
-        r.setAdapter(mPolicyAdapter);
+        r.setAdapter(mPollAdapter);
     }
 
 
-    class PolicyItemView extends RecyclerView.ViewHolder {
+    class PollItemView extends RecyclerView.ViewHolder {
 
         private TextView pTitle;
         private TextView pDescription;
@@ -41,8 +41,8 @@ public class PollHolder {
 
         private String key;
 
-        public PolicyItemView(final ViewGroup parent) {
-            super(LayoutInflater.from(mContext).inflate(R.layout.poll_holder, parent, false));
+        PollItemView(final ViewGroup parent) {
+            super(LayoutInflater.from(mContext).inflate(R.layout.fragment_poll_holder, parent, false));
 
             pTitle = (TextView) itemView.findViewById(R.id.poll_id);
             pDescription = (TextView) itemView.findViewById(R.id.poll_question);
@@ -68,15 +68,14 @@ public class PollHolder {
             });
         }
 
-        public void bind(Policy p, String key) {
+        void bind(Policy p, String key) {
             pTitle.setText(p.getTitle());
             pDescription.setText(p.getDescription());
             voteCount.setText(Long.toString(p.getVote()));
-
             this.key = key;
         }
 
-        public void clickFunction(View view, Policy policy) {
+        void clickFunction(View view, Policy policy) {
 
             new DataBaseHelper().updatePolicy(key, policy, new DataBaseHelper.DataStatus() {
                 @Override
@@ -102,29 +101,29 @@ public class PollHolder {
         }
     }
 
-    class PolicyAdapter extends RecyclerView.Adapter<PolicyItemView> {
-        private List<Policy> mPolicyList;
+    class PollAdapter extends RecyclerView.Adapter<PollItemView> {
+        private List<Policy> mPollList;
         private List<String> mKeys;
 
-        public PolicyAdapter(List<Policy> mPolicyList, List<String> mKeys) {
-            this.mPolicyList = mPolicyList;
+        PollAdapter(List<Policy> mPollList, List<String> mKeys) {
+            this.mPollList = mPollList;
             this.mKeys = mKeys;
         }
 
         @NonNull
         @Override
-        public PolicyItemView onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            return new PolicyItemView(viewGroup);
+        public PollItemView onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            return new PollItemView(viewGroup);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull PolicyItemView policyItemView, int i) {
-            policyItemView.bind(mPolicyList.get(i), mKeys.get(i));
+        public void onBindViewHolder(@NonNull PollItemView pollItemView, int i) {
+            pollItemView.bind(mPollList.get(i), mKeys.get(i));
         }
 
         @Override
         public int getItemCount() {
-            return mPolicyList.size();
+            return mPollList.size();
         }
     }
 }
