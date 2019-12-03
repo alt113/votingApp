@@ -3,7 +3,6 @@
     style="Widget.Material.Light.TextView.ListSeparator"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_small"
     android:background="@drawable/white_border_transparent_bkg"
     android:orientation="vertical"
     android:padding="@dimen/margin_small">
