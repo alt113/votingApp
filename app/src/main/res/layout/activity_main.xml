@@ -6,6 +6,7 @@
     android:background="@drawable/gradient_bkg">
 
     <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -24,6 +25,24 @@
             android:layout_margin="@dimen/margin_medium"
             android:background="@drawable/ic_settings" />
     </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top">
+
+        <Button
+            android:id="@+id/button_start_poll_session"
+            style="?android:textAppearanceSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/white_border_transparent_bkg"
+            android:text="@string/btn_start_poll_session"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progress_bar"

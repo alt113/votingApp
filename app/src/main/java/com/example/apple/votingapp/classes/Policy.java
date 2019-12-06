@@ -1,6 +1,8 @@
-package com.example.apple.votingapp.activity;
+package com.example.apple.votingapp.classes;
 
-public class Policy {
+import java.io.Serializable;
+
+public class Policy implements Serializable {
 
     private String title;
     private String description;
