@@ -25,20 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 /**
- * LoginActivity is the entry point for previous users to
- * access the application and it's services.
- * From this base activity, a user can either login in
- * with their existing email/password or trouble shoot
- * their account by either:
- * <ul>
- * <li>Resetting their password
- * <li>Signing up for the first time.
- * </ul>
- * <p>
- * All accounts are stored within a Firebase database and never on any
- * local device or file. This allows for data encryption and authenticated
- * user/application interaction.
- * <p>
+ * SettingsFragment is responsible for dealing with
+ * user related data such as configuring/changing
+ * existing email addresses or passwords.
  *
  * @author      Rayyan Nasr
  * @author      Jihad Eddine Al Khrufan
