@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.apple.votingapp.R;
@@ -19,19 +20,27 @@ import com.example.apple.votingapp.utils.DataBaseHelper;
 import java.util.List;
 
 public class PollFragment extends Fragment {
-    private TextView pTitle;
-    private TextView pDescription;
+    protected TextView pTitle;
+    protected TextView pDescription;
     private String key;
     private Policy p;
 
-    private TextView count1TextView;
-    private TextView count2TextView;
-    private TextView count3TextView;
-    private TextView count4TextView;
-    private Button option1Button;
-    private Button option2Button;
-    private Button option3Button;
-    private Button option4Button;
+    protected TextView count1TextView;
+    protected TextView count2TextView;
+    protected TextView count3TextView;
+    protected TextView count4TextView;
+    protected TextView option1TextView;
+    protected TextView option2TextView;
+    protected TextView option3TextView;
+    protected TextView option4TextView;
+    protected Button option1Button;
+    protected Button option2Button;
+    protected Button option3Button;
+    protected Button option4Button;
+    protected ProgressBar result1;
+    protected ProgressBar result2;
+    protected ProgressBar result3;
+    protected ProgressBar result4;
 
     public static PollFragment newInstance(Policy p, String key) {
         Bundle args = new Bundle();
@@ -70,52 +79,95 @@ public class PollFragment extends Fragment {
         option2Button = view.findViewById(R.id.option2);
         option3Button = view.findViewById(R.id.option3);
         option4Button = view.findViewById(R.id.option4);
-        
+        option1TextView = view.findViewById(R.id.option1_text);
+        option2TextView = view.findViewById(R.id.option2_text);
+        option3TextView = view.findViewById(R.id.option3_text);
+        option4TextView = view.findViewById(R.id.option4_text);
+        result1 = view.findViewById(R.id.result1);
+        result2 = view.findViewById(R.id.result2);
+        result3 = view.findViewById(R.id.result3);
+        result4 = view.findViewById(R.id.result4);
+
         pTitle.setText(p.getTitle());
         pDescription.setText(p.getDescription());
         option1Button.setText(p.getOption1());
         option2Button.setText(p.getOption2());
         option3Button.setText(p.getOption3());
         option4Button.setText(p.getOption4());
-        count1TextView.setText(String.valueOf(p.getCount1()));
-        count2TextView.setText(String.valueOf(p.getCount2()));
-        count3TextView.setText(String.valueOf(p.getCount3()));
-        count4TextView.setText(String.valueOf(p.getCount4()));
+        option1TextView.setText(p.getOption1());
+        option2TextView.setText(p.getOption2());
+        option3TextView.setText(p.getOption3());
+        option4TextView.setText(p.getOption4());
 
-        final Long count1 = Long.parseLong(count1TextView.getText().toString());
-        final Long count2 = Long.parseLong(count2TextView.getText().toString());
-        final Long count3 = Long.parseLong(count3TextView.getText().toString());
-        final Long count4 = Long.parseLong(count4TextView.getText().toString());
+        if (p.getOption1().equals("-999")) {
+            option1Button.setVisibility(View.GONE);
+            option1TextView.setVisibility(View.GONE);
+            count1TextView.setVisibility(View.GONE);
+            result1.setVisibility(View.GONE);
+        }
+        if (p.getOption2().equals("-999")) {
+            option2Button.setVisibility(View.GONE);
+            option2TextView.setVisibility(View.GONE);
+            count2TextView.setVisibility(View.GONE);
+            result2.setVisibility(View.GONE);
+        }
+        if (p.getOption3().equals("-999")) {
+            option3Button.setVisibility(View.GONE);
+            option3TextView.setVisibility(View.GONE);
+            count3TextView.setVisibility(View.GONE);
+            result3.setVisibility(View.GONE);
+        }
+        if (p.getOption4().equals("-999")) {
+            option4Button.setVisibility(View.GONE);
+            option4TextView.setVisibility(View.GONE);
+            count4TextView.setVisibility(View.GONE);
+            result4.setVisibility(View.GONE);
+        }
+
+        final Long count1 = p.getCount1() == -999 ? 0 : p.getCount1();
+        final Long count2 = p.getCount2() == -999 ? 0 : p.getCount2();
+        final Long count3 = p.getCount3() == -999 ? 0 : p.getCount3();
+        final Long count4 = p.getCount4() == -999 ? 0 : p.getCount4();
+
+        count1TextView.setText(String.valueOf(count1));
+        count2TextView.setText(String.valueOf(count2));
+        count3TextView.setText(String.valueOf(count3));
+        count4TextView.setText(String.valueOf(count4));
+
+        result1.setProgress(Math.toIntExact(count1));
+        result1.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
+        result2.setProgress(Math.toIntExact(count2));
+        result2.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
+        result3.setProgress(Math.toIntExact(count3));
+        result3.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
+        result4.setProgress(Math.toIntExact(count4));
+        result4.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
 
         option1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1 + 1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) + 1));
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1 + 1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
             }
         });
 
         option2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1, count2 + 1, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2 + 1, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
             }
         });
 
         option3Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1, count2, count3 + 1, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3 + 1, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
             }
         });
 
         option4Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1, count2, count3, count4 + 1, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3, count4 + 1, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
             }
         });
 

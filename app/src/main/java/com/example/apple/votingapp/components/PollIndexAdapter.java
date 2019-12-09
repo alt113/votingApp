@@ -37,7 +37,7 @@ public class PollIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
 
-        ((PollIndexHolder) viewHolder).pollIndex.setText(String.valueOf(i));
+        ((PollIndexHolder) viewHolder).pollIndex.setText(String.valueOf(i+1));
 
         // This block handles selecting one and only one subcategory
         if (mSelectedView == null) {

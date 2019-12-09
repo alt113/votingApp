@@ -30,59 +30,8 @@
                     android:padding="@dimen/margin_small"
                     android:text="@string/poll_id"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_large" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/count_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:padding="@dimen/margin_small"
-                        android:text="@string/_0"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_large" />
-
-                    <TextView
-                        android:id="@+id/count_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:padding="@dimen/margin_small"
-                        android:text="@string/_0"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_large" />
-
-                    <TextView
-                        android:id="@+id/count_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:padding="@dimen/margin_small"
-                        android:text="@string/_0"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_large" />
-
-                    <TextView
-                        android:id="@+id/count_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:padding="@dimen/margin_small"
-                        android:text="@string/_0"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_large" />
-
-
-                </LinearLayout>
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -97,22 +46,21 @@
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_medium" />
+                android:textSize="@dimen/text_size_large" />
 
             <LinearLayout
+                android:id="@+id/buttons_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/option1"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
-                    android:layout_weight="1"
-                    android:background="@drawable/white_bkg"
+                    android:background="@drawable/white_button_selector"
                     android:text="@string/option1"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_small"
@@ -122,10 +70,9 @@
                     android:id="@+id/option2"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
-                    android:layout_weight="1"
-                    android:background="@drawable/white_bkg"
+                    android:background="@drawable/white_button_selector"
                     android:text="@string/option2"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_small"
@@ -135,10 +82,9 @@
                     android:id="@+id/option3"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
-                    android:layout_weight="1"
-                    android:background="@drawable/white_bkg"
+                    android:background="@drawable/white_button_selector"
                     android:text="@string/option3"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_small"
@@ -148,16 +94,172 @@
                     android:id="@+id/option4"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
-                    android:layout_weight="1"
-                    android:background="@drawable/white_bkg"
+                    android:background="@drawable/white_button_selector"
                     android:text="@string/option4"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/results_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/option1_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:background="@null"
+                    android:text="@string/poll_question"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/result1"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/width_height_small"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:background="@drawable/progress_bar_background" />
+
+                    <TextView
+                        android:id="@+id/count_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_large" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/option2_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:background="@null"
+                    android:text="@string/poll_question"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/result2"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/width_height_small"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:background="@drawable/progress_bar_background" />
+
+                    <TextView
+                        android:id="@+id/count_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_large" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/option3_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:background="@null"
+                    android:text="@string/poll_question"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/result3"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/width_height_small"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:background="@drawable/progress_bar_background" />
+
+                    <TextView
+                        android:id="@+id/count_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_large" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/option4_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:background="@null"
+                    android:text="@string/poll_question"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/result4"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/width_height_small"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/margin_small"
+                        android:background="@drawable/progress_bar_background" />
+
+                    <TextView
+                        android:id="@+id/count_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_large" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
