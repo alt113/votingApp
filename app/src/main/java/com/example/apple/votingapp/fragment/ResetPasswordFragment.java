@@ -19,19 +19,62 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * ResetPasswordFragment is only called up whenever a user wishes
+ * to reset the password associated with their registered Firebase
+ * account.
+ *
+ * @author      Rayyan Nasr
+ * @author      Jihad Eddine Al Khrufan
+ * @version     %I%, %G%
+ * @since       1.0
+ */
 public class ResetPasswordFragment extends Fragment implements View.OnClickListener {
 
+    /**
+     * Textbox to input email address
+     */
     private EditText inputEmail;
+
+    /**
+     * Reset and Back buttons
+     */
     protected Button buttonReset, buttonBack;
+
+    /**
+     * Firebase authentication Object
+     */
     private FirebaseAuth auth;
+
+    /**
+     * Progress bar object for data loading
+     */
     private ProgressBar progressBar;
 
+    /**
+     * After the onCreate() is called (in the Fragment), the Fragment's
+     * onCreateView() is called. You can assign your View variables and do
+     * any graphical initialisations. You are expected to return a View from
+     * this method, and this is the main UI view, but if your Fragment does not
+     * use any layouts or graphics, you can return null (happens by default if
+     * you don't override).
+     *
+     * @param inflater instantiates a layout XML file into its corresponding View objects.
+     * @param container a special view that can contain other views (called children)
+     * @param savedInstanceState  a saved instance of the application
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_reset_password, container, false);
     }
 
+    /**
+     * A make sure that view is fully created.
+     *
+     * @param view a view of the application
+     * @param savedInstanceState  a saved instance of the application
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,6 +89,15 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
         buttonReset.setOnClickListener(this);
     }
 
+    /**
+     * When the user clicks a button, the Button object receives an on-click event.
+     * <p>
+     * If you use this event handler in your code, make sure that you are
+     * having that button in your MainActivity. It won’t work if you use this event
+     * handler in fragment because onClick attribute only works in Activity.
+     *
+     * @param  v  a view of the application
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
