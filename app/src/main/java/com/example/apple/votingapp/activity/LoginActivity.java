@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      */
     protected View buttonReset;
 
-
     /**
      * If you save the state of the application in a bundle (typically non-
      * persistent, dynamic data in onSaveInstanceState), it can be passed back
@@ -174,4 +173,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
 }

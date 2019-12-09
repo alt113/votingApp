@@ -46,6 +46,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected Button buttonStartPollSession;
 
     /**
+     * This is the state in which the app interacts with the user. The app stays in
+     * this state until something happens to take focus away from the app. Such as
+     * receiving a phone call. You should implement onResume() to initialize
+     * components that you release during onPause().
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    /**
      * If you save the state of the application in a bundle (typically non-
      * persistent, dynamic data in onSaveInstanceState), it can be passed back
      * to onCreate if the activity needs to be recreated (e.g., orientation change).
@@ -84,17 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonSettings.setOnClickListener(this);
         buttonStartPollSession.setOnClickListener(this);
 
-    }
-
-    /**
-     * This is the state in which the app interacts with the user. The app stays in
-     * this state until something happens to take focus away from the app. Such as
-     * receiving a phone call. You should implement onResume() to initialize
-     * components that you release during onPause().
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     /**
