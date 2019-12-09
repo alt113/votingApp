@@ -26,8 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
  * with their existing email/password or trouble shoot
  * their account by either:
  * <ul>
- * <li>Resetting their password
- * <li>Signing up for the first time.
+ * <li> Resetting their password
+ * <li> Signing up for the first time.
  * </ul>
  * <p>
  * All accounts are stored within a Firebase database and never on any

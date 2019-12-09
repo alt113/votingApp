@@ -115,6 +115,12 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
+
+                /**
+                 * Once user has selected a new password we must lock that
+                 * in to the email address so that they may be associated
+                 * correctly in the Firebase server.
+                 */
                 auth.sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
