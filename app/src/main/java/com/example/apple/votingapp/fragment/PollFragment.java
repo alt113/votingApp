@@ -20,6 +20,16 @@ import com.example.apple.votingapp.utils.DataBaseHelper;
 
 import java.util.List;
 
+/**
+ * PollFragment takes care of populating the fragment
+ * page with the actual data values from the Firebase
+ * Realtime Database. It also handles data manipulation.
+ *
+ * @author Rayyan Nasr
+ * @author Jihad Eddine Al Khrufan
+ * @version %I%, %G%
+ * @since 1.0
+ */
 public class PollFragment extends Fragment implements View.OnClickListener {
     protected TextView pTitle;
     protected TextView pDescription;
@@ -49,6 +59,16 @@ public class PollFragment extends Fragment implements View.OnClickListener {
     protected Integer previousOption;
     public PreviousOptionsUpdater updater;
 
+
+    /**
+     * New instance poll fragment.
+     *
+     * @param p              the p
+     * @param key            the key
+     * @param previousOption the previously selected option
+     *                       so that user dos no select multiple options
+     * @return the poll fragment
+     */
     public static PollFragment newInstance(Policy p, String key, Integer previousOption) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.KEY, key);
@@ -59,12 +79,20 @@ public class PollFragment extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        updater = (PreviousOptionsUpdater) activity;
-    }
-
+    /**
+     * If you save the state of the application in a bundle (typically non-
+     * persistent, dynamic data in onSaveInstanceState), it can be passed back
+     * to onCreate if the activity needs to be recreated (e.g., orientation change).
+     * If the orientation changes(i.e rotating your device from landscape mode to
+     * portrait and vice versa), the activity is recreated and onCreate() method is
+     * called again, so that you don't lose this prior information. If no data was
+     * supplied, savedInstanceState is null.
+     * <p>
+     * For further information visit the official link:
+     * http://developer.android.com/guide/topics/resources/runtime-changes.html
+     *
+     * @param savedInstanceState a saved instance of the application
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,15 +103,45 @@ public class PollFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Set up interface to handle user options
+     *
+     * @param activity interface
+     */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        updater = (PreviousOptionsUpdater) activity;
+    }
+
+    /**
+     * After the onCreate() is called (in the Fragment), the Fragment's
+     * onCreateView() is called. You can assign your View variables and do
+     * any graphical initialisations. You are expected to return a View from
+     * this method, and this is the main UI view, but if your Fragment does not
+     * use any layouts or graphics, you can return null (happens by default if
+     * you don't override).
+     *
+     * @param inflater           instantiates a layout XML file into its corresponding View objects.
+     * @param container          a special view that can contain other views (called children)
+     * @param savedInstanceState a saved instance of the application
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_poll_holder, container, false);
     }
 
+    /**
+     * A make sure that view is fully created.
+     *
+     * @param view               a view of the application
+     * @param savedInstanceState a saved instance of the application
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         pTitle = view.findViewById(R.id.poll_id);
         pDescription = view.findViewById(R.id.poll_question);
         count1TextView = view.findViewById(R.id.count_1);
@@ -188,24 +246,47 @@ public class PollFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    void clickFunction(View view, Policy policy) {
+    /**
+     * Takes care of manipulating data located in
+     * the Firebase Realtime Database.
+     *
+     * @param view   the view
+     * @param policy the policy
+     */
+    void updateDatabase(View view, Policy policy) {
 
         new DataBaseHelper().updatePolicy(key, policy, new DataBaseHelper.DataStatus() {
+
+            /**
+             * Function handler for when data is loaded.
+             *
+             * @param p list of policies
+             * @param keys list of policy keys
+             */
             @Override
             public void DataIsLoaded(List<Policy> p, List<String> keys) {
 
             }
 
+            /**
+             * Function handler for when data is inserted into database.
+             */
             @Override
             public void DataIsInserted() {
 
             }
 
+            /**
+             * Function handler for when data is deleted from database.
+             */
             @Override
             public void DataIsDeleted() {
 
             }
 
+            /**
+             * Function handler for when data is updated in database.
+             */
             @Override
             public void DataIsUpdated() {
                 Log.i("Info", "Data Updated Successfully");
@@ -234,7 +315,7 @@ public class PollFragment extends Fragment implements View.OnClickListener {
                 count4++;
                 break;
         }
-        clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
+        updateDatabase(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
 
     }
 

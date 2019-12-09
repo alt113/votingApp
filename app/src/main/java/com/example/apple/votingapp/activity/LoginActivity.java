@@ -19,14 +19,67 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * LoginActivity is the entry point for previous users to
+ * access the application and it's services.
+ * From this base activity, a user can either login in
+ * with their existing email/password or trouble shoot
+ * their account by either:
+ * <ul>
+ * <li> Resetting their password
+ * <li> Signing up for the first time.
+ * </ul>
+ * <p>
+ * All accounts are stored within a Firebase database and never on any
+ * local device or file. This allows for data encryption and authenticated
+ * user/application interaction.
+ * <p>
+ *
+ * @author      Rayyan Nasr
+ * @author      Jihad Eddine Al Khrufan
+ * @version     %I%, %G%
+ * @since       1.0
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     *  Input boxes for email and password
+     */
     private EditText inputEmail, inputPassword;
+
+    /**
+     * Firebase authentication Object
+     */
     private FirebaseAuth auth;
+
+    /**
+     * Progress bar object for data loading
+     */
     private ProgressBar progressBar;
+
+    /**
+     * Login and Sign up buttons
+     */
     protected Button buttonSignUp, buttonLogin;
+    /**
+     * The Button reset.
+     */
     protected View buttonReset;
 
+    /**
+     * If you save the state of the application in a bundle (typically non-
+     * persistent, dynamic data in onSaveInstanceState), it can be passed back
+     * to onCreate if the activity needs to be recreated (e.g., orientation change).
+     * If the orientation changes(i.e rotating your device from landscape mode to
+     * portrait and vice versa), the activity is recreated and onCreate() method is
+     * called again, so that you don't lose this prior information. If no data was
+     * supplied, savedInstanceState is null.
+     * <p>
+     * For further information visit the official link:
+     * http://developer.android.com/guide/topics/resources/runtime-changes.html
+     *
+     * @param  savedInstanceState  a saved instance of the application
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +110,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignUp.setOnClickListener(this);
     }
 
+    /**
+     * When the user clicks a button, the Button object receives an on-click event.
+     * <p>
+     * If you use this event handler in your code, make sure that you are
+     * having that button in your MainActivity. It won’t work if you use this event
+     * handler in fragment because onClick attribute only works in Activity.
+     *
+     * @param  v  a view of the application
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -111,4 +173,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
 }
