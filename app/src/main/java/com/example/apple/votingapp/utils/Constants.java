@@ -21,5 +21,6 @@ public class Constants {
     public static final String FRAGMENT_POLL_SESSION = "PollSessionFragment";
     public static final String KEY = "key";
     public static final String POLICY = "policy";
+    public static final String PREVIOUS_OPTION = "previous option";
 }
 

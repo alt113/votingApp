@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.apple.votingapp.R;
+import com.example.apple.votingapp.fragment.PollFragment;
 import com.example.apple.votingapp.fragment.PollSessionFragment;
 import com.example.apple.votingapp.fragment.SettingsFragment;
 import com.example.apple.votingapp.utils.Constants;
@@ -15,12 +16,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, PollFragment.PreviousOptionsUpdater {
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     protected Button buttonSettings;
     protected Button buttonStartPollSession;
+    private PollSessionFragment pollSessionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +85,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_start_poll_session:
                 if (getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_POLL_SESSION) == null) {
+                    pollSessionFragment = new PollSessionFragment();
                     getSupportFragmentManager()
                             .beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                            .add(R.id.main_activity_container, new PollSessionFragment(), Constants.FRAGMENT_POLL_SESSION).addToBackStack(Constants.FRAGMENT_POLL_SESSION).commit();
+                            .add(R.id.main_activity_container, pollSessionFragment, Constants.FRAGMENT_POLL_SESSION).addToBackStack(Constants.FRAGMENT_POLL_SESSION).commit();
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void updatePreviousOptions(String key, int option) {
+        if (pollSessionFragment != null) {
+            pollSessionFragment.updateOptionsList(key, option);
         }
     }
 }

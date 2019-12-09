@@ -20,6 +20,7 @@ import com.example.apple.votingapp.components.PollIndexAdapter;
 import com.example.apple.votingapp.utils.DataBaseHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PollSessionFragment extends Fragment implements View.OnClickListener {
@@ -29,6 +30,7 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
     protected Button buttonBack, buttonFinish;
     private ProgressBar progressBar;
     private int currentPosition = 0;
+    private HashMap<String, Integer> previousSelections = new HashMap<>();
 
 
     @Override
@@ -76,10 +78,11 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
     }
 
     private void setViewPagerAdapter(final ArrayList<String> keys, final ArrayList<Policy> policies) {
+        if (!isAdded()) return;
         pollsViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                return PollFragment.newInstance(policies.get(i), keys.get(i));
+                return PollFragment.newInstance(policies.get(i), keys.get(i), previousSelections.get(keys.get(i)));
             }
 
             @Override
@@ -96,12 +99,6 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
             @Override
             public void onPageSelected(int pos) {
                 currentPosition = pos;
-//                if (pollsRecyclerView!=null) {
-//                    PollIndexAdapter.PollIndexHolder holder = (PollIndexAdapter.PollIndexHolder) pollsRecyclerView.getChildViewHolder(pollsRecyclerView.getChildAt(i));
-//                    if (holder != null && pollsRecyclerView.getAdapter() != null) {
-//                        ((PollIndexAdapter) pollsRecyclerView.getAdapter()).setSelected(holder.itemView);
-//                    }
-//                }
                 clickRecyclerView(pos);
             }
 
@@ -152,5 +149,9 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
                 }
                 break;
         }
+    }
+
+    public void updateOptionsList(String key, Integer option) {
+        previousSelections.put(key, option);
     }
 }

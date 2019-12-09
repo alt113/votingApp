@@ -1,5 +1,6 @@
 package com.example.apple.votingapp.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +20,7 @@ import com.example.apple.votingapp.utils.DataBaseHelper;
 
 import java.util.List;
 
-public class PollFragment extends Fragment {
+public class PollFragment extends Fragment implements View.OnClickListener {
     protected TextView pTitle;
     protected TextView pDescription;
     private String key;
@@ -41,14 +42,27 @@ public class PollFragment extends Fragment {
     protected ProgressBar result2;
     protected ProgressBar result3;
     protected ProgressBar result4;
+    private Long count1;
+    private Long count2;
+    private Long count3;
+    private Long count4;
+    protected Integer previousOption;
+    public PreviousOptionsUpdater updater;
 
-    public static PollFragment newInstance(Policy p, String key) {
+    public static PollFragment newInstance(Policy p, String key, Integer previousOption) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.KEY, key);
         args.putSerializable(Constants.POLICY, p);
+        args.putSerializable(Constants.PREVIOUS_OPTION, previousOption);
         PollFragment fragment = new PollFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        updater = (PreviousOptionsUpdater) activity;
     }
 
     @Override
@@ -57,6 +71,7 @@ public class PollFragment extends Fragment {
         if (getArguments() != null) {
             key = (String) getArguments().getSerializable(Constants.KEY);
             p = (Policy) getArguments().getSerializable(Constants.POLICY);
+            previousOption = (Integer) getArguments().getSerializable(Constants.PREVIOUS_OPTION);
         }
     }
 
@@ -124,10 +139,10 @@ public class PollFragment extends Fragment {
             result4.setVisibility(View.GONE);
         }
 
-        final Long count1 = p.getCount1() == -999 ? 0 : p.getCount1();
-        final Long count2 = p.getCount2() == -999 ? 0 : p.getCount2();
-        final Long count3 = p.getCount3() == -999 ? 0 : p.getCount3();
-        final Long count4 = p.getCount4() == -999 ? 0 : p.getCount4();
+        count1 = p.getCount1() == -999 ? 0 : p.getCount1();
+        count2 = p.getCount2() == -999 ? 0 : p.getCount2();
+        count3 = p.getCount3() == -999 ? 0 : p.getCount3();
+        count4 = p.getCount4() == -999 ? 0 : p.getCount4();
 
         count1TextView.setText(String.valueOf(count1));
         count2TextView.setText(String.valueOf(count2));
@@ -143,34 +158,34 @@ public class PollFragment extends Fragment {
         result4.setProgress(Math.toIntExact(count4));
         result4.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
 
-        option1Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1 + 1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-            }
-        });
+        option1Button.setOnClickListener(this);
 
-        option2Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2 + 1, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-            }
-        });
+        option2Button.setOnClickListener(this);
 
-        option3Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3 + 1, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-            }
-        });
+        option3Button.setOnClickListener(this);
 
-        option4Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3, count4 + 1, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
-            }
-        });
+        option4Button.setOnClickListener(this);
 
+    }
+
+    private void subtractPreviousOptionCount() {
+        if (previousOption != null) {
+            Log.v("PREVIOUS", previousOption + "");
+            switch (previousOption) {
+                case 1:
+                    count1--;
+                    break;
+                case 2:
+                    count2--;
+                    break;
+                case 3:
+                    count3--;
+                    break;
+                case 4:
+                    count4--;
+                    break;
+            }
+        }
     }
 
     void clickFunction(View view, Policy policy) {
@@ -196,5 +211,34 @@ public class PollFragment extends Fragment {
                 Log.i("Info", "Data Updated Successfully");
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        subtractPreviousOptionCount();
+        switch (v.getId()) {
+            case R.id.option1:
+                updater.updatePreviousOptions(key, 1);
+                count1++;
+                break;
+            case R.id.option2:
+                updater.updatePreviousOptions(key, 2);
+                count2++;
+                break;
+            case R.id.option3:
+                updater.updatePreviousOptions(key, 3);
+                count3++;
+                break;
+            case R.id.option4:
+                updater.updatePreviousOptions(key, 4);
+                count4++;
+                break;
+        }
+        clickFunction(getView(), new Policy(p.getTitle(), p.getDescription(), count1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
+
+    }
+
+    public interface PreviousOptionsUpdater {
+        void updatePreviousOptions(String key, int option);
     }
 }
