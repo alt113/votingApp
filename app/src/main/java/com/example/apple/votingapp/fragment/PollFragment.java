@@ -200,21 +200,27 @@ public class PollFragment extends Fragment implements View.OnClickListener {
 
         result1.setProgress(Math.toIntExact(count1));
         result1.setMax(Math.toIntExact(totalVotes));
+        result1.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_background));
         result2.setProgress(Math.toIntExact(count2));
         result2.setMax(Math.toIntExact(totalVotes));
+        result2.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_background));
         result3.setProgress(Math.toIntExact(count3));
         result3.setMax(Math.toIntExact(totalVotes));
+        result3.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_background));
         result4.setProgress(Math.toIntExact(count4));
         result4.setMax(Math.toIntExact(totalVotes));
+        result4.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bar_background));
 
         totalVotesTextView.setText(String.valueOf(totalVotes));
 
         if (mode == 2) {
             view.findViewById(R.id.results_layout).setVisibility(View.VISIBLE);
             view.findViewById(R.id.buttons_layout).setVisibility(View.GONE);
+            view.findViewById(R.id.votes_layout).setVisibility(View.VISIBLE);
         } else {
             view.findViewById(R.id.results_layout).setVisibility(View.GONE);
             view.findViewById(R.id.buttons_layout).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.votes_layout).setVisibility(View.GONE);
         }
 
         option1Button.setOnClickListener(this);

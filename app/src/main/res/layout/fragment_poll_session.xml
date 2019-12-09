@@ -62,6 +62,7 @@
         android:text="@string/finish"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_size_small"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </LinearLayout>
