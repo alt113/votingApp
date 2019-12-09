@@ -70,6 +70,17 @@ public class PollFragment extends Fragment {
         option2Button = view.findViewById(R.id.option2);
         option3Button = view.findViewById(R.id.option3);
         option4Button = view.findViewById(R.id.option4);
+        
+        pTitle.setText(p.getTitle());
+        pDescription.setText(p.getDescription());
+        option1Button.setText(p.getOption1());
+        option2Button.setText(p.getOption2());
+        option3Button.setText(p.getOption3());
+        option4Button.setText(p.getOption4());
+        count1TextView.setText(String.valueOf(p.getCount1()));
+        count2TextView.setText(String.valueOf(p.getCount2()));
+        count3TextView.setText(String.valueOf(p.getCount3()));
+        count4TextView.setText(String.valueOf(p.getCount4()));
 
         final Long count1 = Long.parseLong(count1TextView.getText().toString());
         final Long count2 = Long.parseLong(count2TextView.getText().toString());
@@ -107,17 +118,6 @@ public class PollFragment extends Fragment {
 //                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
             }
         });
-
-        pTitle.setText(p.getTitle());
-        pDescription.setText(p.getDescription());
-        option1Button.setText(p.getOption1());
-        option2Button.setText(p.getOption2());
-        option3Button.setText(p.getOption3());
-        option4Button.setText(p.getOption4());
-        count1TextView.setText(String.valueOf(p.getCount1()));
-        count2TextView.setText(String.valueOf(p.getCount2()));
-        count3TextView.setText(String.valueOf(p.getCount3()));
-        count4TextView.setText(String.valueOf(p.getCount4()));
 
     }
 
