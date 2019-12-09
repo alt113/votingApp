@@ -49,4 +49,5 @@
     <string name="finish">Finish</string>
     <string name="option3">Option3</string>
     <string name="option4">Option4</string>
+    <string name="btn_view_results">Check Poll Results</string>
 </resources>

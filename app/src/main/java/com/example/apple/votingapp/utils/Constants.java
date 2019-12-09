@@ -85,5 +85,6 @@ public class Constants {
      */
     public static final String POLICY = "policy";
     public static final String PREVIOUS_OPTION = "previous option";
+    public static final String MODE = "MODE";
 }
 

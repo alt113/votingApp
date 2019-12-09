@@ -57,6 +57,8 @@ public class PollFragment extends Fragment implements View.OnClickListener {
     private Long count3;
     private Long count4;
     protected Integer previousOption;
+    protected TextView totalVotesTextView;
+    Integer mode = 1;
     public PreviousOptionsUpdater updater;
 
 
@@ -67,13 +69,15 @@ public class PollFragment extends Fragment implements View.OnClickListener {
      * @param key            the key
      * @param previousOption the previously selected option
      *                       so that user dos no select multiple options
+     * @param mode           1 for session, 2 for results
      * @return the poll fragment
      */
-    public static PollFragment newInstance(Policy p, String key, Integer previousOption) {
+    public static PollFragment newInstance(Policy p, String key, Integer previousOption, Integer mode) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.KEY, key);
         args.putSerializable(Constants.POLICY, p);
         args.putSerializable(Constants.PREVIOUS_OPTION, previousOption);
+        args.putSerializable(Constants.MODE, mode);
         PollFragment fragment = new PollFragment();
         fragment.setArguments(args);
         return fragment;
@@ -100,6 +104,7 @@ public class PollFragment extends Fragment implements View.OnClickListener {
             key = (String) getArguments().getSerializable(Constants.KEY);
             p = (Policy) getArguments().getSerializable(Constants.POLICY);
             previousOption = (Integer) getArguments().getSerializable(Constants.PREVIOUS_OPTION);
+            mode = (Integer) getArguments().getSerializable(Constants.MODE);
         }
     }
 
@@ -152,14 +157,19 @@ public class PollFragment extends Fragment implements View.OnClickListener {
         option2Button = view.findViewById(R.id.option2);
         option3Button = view.findViewById(R.id.option3);
         option4Button = view.findViewById(R.id.option4);
+
+        checkPreviouslySelectedButton();
+
         option1TextView = view.findViewById(R.id.option1_text);
         option2TextView = view.findViewById(R.id.option2_text);
         option3TextView = view.findViewById(R.id.option3_text);
         option4TextView = view.findViewById(R.id.option4_text);
+
         result1 = view.findViewById(R.id.result1);
         result2 = view.findViewById(R.id.result2);
         result3 = view.findViewById(R.id.result3);
         result4 = view.findViewById(R.id.result4);
+        totalVotesTextView = view.findViewById(R.id.total_votes_count);
 
         pTitle.setText(p.getTitle());
         pDescription.setText(p.getDescription());
@@ -167,11 +177,57 @@ public class PollFragment extends Fragment implements View.OnClickListener {
         option2Button.setText(p.getOption2());
         option3Button.setText(p.getOption3());
         option4Button.setText(p.getOption4());
+
+
         option1TextView.setText(p.getOption1());
         option2TextView.setText(p.getOption2());
         option3TextView.setText(p.getOption3());
         option4TextView.setText(p.getOption4());
 
+        handleUnusedOptions();
+
+        count1 = p.getCount1() == -999 ? 0 : p.getCount1();
+        count2 = p.getCount2() == -999 ? 0 : p.getCount2();
+        count3 = p.getCount3() == -999 ? 0 : p.getCount3();
+        count4 = p.getCount4() == -999 ? 0 : p.getCount4();
+
+        count1TextView.setText(String.valueOf(count1));
+        count2TextView.setText(String.valueOf(count2));
+        count3TextView.setText(String.valueOf(count3));
+        count4TextView.setText(String.valueOf(count4));
+
+        long totalVotes = count1 + count2 + count3 + count4;
+
+        result1.setProgress(Math.toIntExact(count1));
+        result1.setMax(Math.toIntExact(totalVotes));
+        result2.setProgress(Math.toIntExact(count2));
+        result2.setMax(Math.toIntExact(totalVotes));
+        result3.setProgress(Math.toIntExact(count3));
+        result3.setMax(Math.toIntExact(totalVotes));
+        result4.setProgress(Math.toIntExact(count4));
+        result4.setMax(Math.toIntExact(totalVotes));
+
+        totalVotesTextView.setText(String.valueOf(totalVotes));
+
+        if (mode == 2) {
+            view.findViewById(R.id.results_layout).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.buttons_layout).setVisibility(View.GONE);
+        } else {
+            view.findViewById(R.id.results_layout).setVisibility(View.GONE);
+            view.findViewById(R.id.buttons_layout).setVisibility(View.VISIBLE);
+        }
+
+        option1Button.setOnClickListener(this);
+
+        option2Button.setOnClickListener(this);
+
+        option3Button.setOnClickListener(this);
+
+        option4Button.setOnClickListener(this);
+
+    }
+
+    private void handleUnusedOptions() {
         if (p.getOption1().equals("-999")) {
             option1Button.setVisibility(View.GONE);
             option1TextView.setVisibility(View.GONE);
@@ -196,34 +252,25 @@ public class PollFragment extends Fragment implements View.OnClickListener {
             count4TextView.setVisibility(View.GONE);
             result4.setVisibility(View.GONE);
         }
+    }
 
-        count1 = p.getCount1() == -999 ? 0 : p.getCount1();
-        count2 = p.getCount2() == -999 ? 0 : p.getCount2();
-        count3 = p.getCount3() == -999 ? 0 : p.getCount3();
-        count4 = p.getCount4() == -999 ? 0 : p.getCount4();
-
-        count1TextView.setText(String.valueOf(count1));
-        count2TextView.setText(String.valueOf(count2));
-        count3TextView.setText(String.valueOf(count3));
-        count4TextView.setText(String.valueOf(count4));
-
-        result1.setProgress(Math.toIntExact(count1));
-        result1.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
-        result2.setProgress(Math.toIntExact(count2));
-        result2.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
-        result3.setProgress(Math.toIntExact(count3));
-        result3.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
-        result4.setProgress(Math.toIntExact(count4));
-        result4.setMax(Math.toIntExact(count1 + count2 + count3 + count4));
-
-        option1Button.setOnClickListener(this);
-
-        option2Button.setOnClickListener(this);
-
-        option3Button.setOnClickListener(this);
-
-        option4Button.setOnClickListener(this);
-
+    private void checkPreviouslySelectedButton() {
+        if (previousOption != null) {
+            switch (previousOption) {
+                case 1:
+                    option1Button.setAlpha(0.5f);
+                    break;
+                case 2:
+                    option2Button.setAlpha(0.5f);
+                    break;
+                case 3:
+                    option3Button.setAlpha(0.5f);
+                    break;
+                case 4:
+                    option4Button.setAlpha(0.5f);
+                    break;
+            }
+        }
     }
 
     private void subtractPreviousOptionCount() {

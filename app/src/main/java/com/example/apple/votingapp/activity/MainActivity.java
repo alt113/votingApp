@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Button to start a poll session.
      */
     protected Button buttonStartPollSession;
+    /**
+     * Button to view a poll session results.
+     */
+    protected Button buttonCheckResults;
     private PollSessionFragment pollSessionFragment;
 
     /**
@@ -94,7 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonSettings = findViewById(R.id.button_settings);
         buttonStartPollSession = findViewById(R.id.button_start_poll_session);
+        buttonCheckResults = findViewById(R.id.button_check_poll_results);
         buttonSettings.setOnClickListener(this);
+        buttonCheckResults.setOnClickListener(this);
         buttonStartPollSession.setOnClickListener(this);
 
     }
@@ -147,7 +153,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_start_poll_session:
                 if (getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_POLL_SESSION) == null) {
-                    pollSessionFragment = new PollSessionFragment();
+                    pollSessionFragment = PollSessionFragment.newInstance(1);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                            .add(R.id.main_activity_container, pollSessionFragment, Constants.FRAGMENT_POLL_SESSION).addToBackStack(Constants.FRAGMENT_POLL_SESSION).commit();
+                }
+                break;
+            case R.id.button_check_poll_results:
+                if (getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_POLL_SESSION) == null) {
+                    pollSessionFragment = PollSessionFragment.newInstance(2);
                     getSupportFragmentManager()
                             .beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)

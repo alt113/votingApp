@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import com.example.apple.votingapp.R;
 import com.example.apple.votingapp.classes.Policy;
 import com.example.apple.votingapp.components.PollIndexAdapter;
+import com.example.apple.votingapp.utils.Constants;
 import com.example.apple.votingapp.utils.DataBaseHelper;
 
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
      */
     private HashMap<String, Integer> previousSelections = new HashMap<>();
 
+    Integer mode = 1;
 
     /**
      * If you save the state of the application in a bundle (typically non-
@@ -86,7 +88,29 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
     }
 
     /**
-     * A make sure that view is fully created.
+     * New instance poll session fragment.
+     *
+     * @param mode 1 for session, 2 for results
+     * @return the poll fragment
+     */
+    public static PollSessionFragment newInstance(Integer mode) {
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.MODE, mode);
+        PollSessionFragment fragment = new PollSessionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mode = (Integer) getArguments().getSerializable(Constants.MODE);
+        }
+    }
+
+    /**
+     * A make sure that view is fully developed.
      *
      * @param view               a view of the application
      * @param savedInstanceState a saved instance of the application
@@ -157,7 +181,7 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
         pollsViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                return PollFragment.newInstance(policies.get(i), keys.get(i), previousSelections.get(keys.get(i)));
+                return PollFragment.newInstance(policies.get(i), keys.get(i), previousSelections.get(keys.get(i)),mode);
             }
 
             @Override
