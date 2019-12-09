@@ -21,15 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 /**
- * LoginActivity is the entry point for previous users to
- * access the application and it's services.
- * From this base activity, a user can either login in
- * with their existing email/password or trouble shoot
- * their account by either:
- * <ul>
- * <li>Resetting their password
- * <li>Signing up for the first time.
- * </ul>
+ * SignUpActivity is where users register with the Firebase
+ * server to save their email/password credentials for later
+ * log in and use of the application and its services.
+ *
  * <p>
  * All accounts are stored within a Firebase database and never on any
  * local device or file. This allows for data encryption and authenticated

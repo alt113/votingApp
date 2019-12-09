@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
-     * Firebase authenticatio Listener Object
+     * Firebase authentication Listener Object
      */
     private FirebaseAuth.AuthStateListener authListener;
 
