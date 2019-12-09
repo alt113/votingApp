@@ -21,11 +21,17 @@ import java.util.List;
 public class PollFragment extends Fragment {
     private TextView pTitle;
     private TextView pDescription;
-    private TextView voteCount;
-    private Button voteUp;
-    private Button voteDown;
     private String key;
     private Policy p;
+
+    private TextView count1TextView;
+    private TextView count2TextView;
+    private TextView count3TextView;
+    private TextView count4TextView;
+    private Button option1Button;
+    private Button option2Button;
+    private Button option3Button;
+    private Button option4Button;
 
     public static PollFragment newInstance(Policy p, String key) {
         Bundle args = new Bundle();
@@ -56,29 +62,63 @@ public class PollFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pTitle = view.findViewById(R.id.poll_id);
         pDescription = view.findViewById(R.id.poll_question);
-        voteCount = view.findViewById(R.id.vote_count);
-        voteUp = view.findViewById(R.id.button_upvote);
-        voteDown = view.findViewById(R.id.button_downvote);
+        count1TextView = view.findViewById(R.id.count_1);
+        count2TextView = view.findViewById(R.id.count_2);
+        count3TextView = view.findViewById(R.id.count_3);
+        count4TextView = view.findViewById(R.id.count_4);
+        option1Button = view.findViewById(R.id.option1);
+        option2Button = view.findViewById(R.id.option2);
+        option3Button = view.findViewById(R.id.option3);
+        option4Button = view.findViewById(R.id.option4);
 
-        voteUp.setOnClickListener(new View.OnClickListener() {
+        final Long count1 = Long.parseLong(count1TextView.getText().toString());
+        final Long count2 = Long.parseLong(count2TextView.getText().toString());
+        final Long count3 = Long.parseLong(count3TextView.getText().toString());
+        final Long count4 = Long.parseLong(count4TextView.getText().toString());
+
+        option1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickFunction(getView(), new Policy(pTitle.getText().toString(), pDescription.getText().toString(), Long.parseLong(voteCount.getText().toString()) + 1));
-                voteCount.setText(Long.toString(Long.parseLong(voteCount.getText().toString()) + 1));
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1 + 1, count2, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
+//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) + 1));
             }
         });
 
-        voteDown.setOnClickListener(new View.OnClickListener() {
+        option2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickFunction(getView(), new Policy(pTitle.getText().toString(), pDescription.getText().toString(), Long.parseLong(voteCount.getText().toString()) - 1));
-                voteCount.setText(Long.toString(Long.parseLong(voteCount.getText().toString()) - 1));
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1, count2 + 1, count3, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
+//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
+            }
+        });
+
+        option3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1, count2, count3 + 1, count4, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
+//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
+            }
+        });
+
+        option4Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickFunction(getView(), new Policy(p.getTitle(), p.getDescription().toString(), count1, count2, count3, count4 + 1, p.getOption1(), p.getOption2(), p.getOption3(), p.getOption4()));
+//                count1TextView.setText(Long.toString(Long.parseLong(count1TextView.getText().toString()) - 1));
             }
         });
 
         pTitle.setText(p.getTitle());
         pDescription.setText(p.getDescription());
-        voteCount.setText(Long.toString(p.getVote()));
+        option1Button.setText(p.getOption1());
+        option2Button.setText(p.getOption2());
+        option3Button.setText(p.getOption3());
+        option4Button.setText(p.getOption4());
+        count1TextView.setText(String.valueOf(p.getCount1()));
+        count2TextView.setText(String.valueOf(p.getCount2()));
+        count3TextView.setText(String.valueOf(p.getCount3()));
+        count4TextView.setText(String.valueOf(p.getCount4()));
+
     }
 
     void clickFunction(View view, Policy policy) {
