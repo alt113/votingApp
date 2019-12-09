@@ -22,7 +22,7 @@ import java.util.List;
  * PollFragment takes care of populating the fragment
  * page with the actual data values from the Firebase
  * Realtime Database. It also handles data manipulation.
- * 
+ *
  * @author Rayyan Nasr
  * @author Jihad Eddine Al Khrufan
  * @version %I%, %G%
