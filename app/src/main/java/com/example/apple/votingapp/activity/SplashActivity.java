@@ -63,6 +63,20 @@ public class SplashActivity extends Activity {
             public void run() {
                 authListener = new FirebaseAuth.AuthStateListener() {
                     @Override
+                    /**
+                     * Based on the authentication state of the user they are presented
+                     * with two options:
+                     *
+                     * <ul>
+                     * <li> <p>
+                     *     If they are not a new user and their authentication did
+                     *     not return as null then proceed to the MainAcitivity.
+                     * </p>
+                     * <li> <p>
+                     *     Else send the user to the LoginActivity
+                     * </p>
+                     * </ul>
+                     */
                     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                         Intent intent = null;
                         FirebaseUser newUser = firebaseAuth.getCurrentUser();
