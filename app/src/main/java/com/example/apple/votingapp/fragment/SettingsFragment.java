@@ -24,23 +24,85 @@ import com.google.firebase.auth.FirebaseUser;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+/**
+ * SettingsFragment is responsible for dealing with
+ * user related data such as configuring/changing
+ * existing email addresses or passwords.
+ *
+ * @author      Rayyan Nasr
+ * @author      Jihad Eddine Al Khrufan
+ * @version     %I%, %G%
+ * @since       1.0
+ */
 public class SettingsFragment extends Fragment implements View.OnClickListener {
+
+    /**
+     *  Change email, change password, reset email, and remove user views
+     */
     protected View buttonChangeEmail, buttonChangePassword, buttonSendResetEmail, buttonRemoveUser;
+
+    /**
+     *  Change email, change password, send email, remove, signout, back buttons
+     */
     protected Button
             changeEmail, changePassword, sendEmail, remove, signOut, buttonBack;
+
+
+    /**
+     *  Textviews to enter old and new emails and passwords
+     */
     private EditText oldEmail, newEmail, password, newPassword;
+
+    /**
+     *  Progress bar object for data loading
+     */
     private ProgressBar progressBar;
+
+    /**
+     *  Firebase authentication Listener Object
+     */
     private FirebaseAuth.AuthStateListener authListener;
+
+
+    /**
+     *  Firebase authentication Object
+     */
     private FirebaseAuth auth;
+
+    /**
+     *  Firebase User Object
+     */
     private FirebaseUser user;
+
+    /**
+     *  Expandable Layouts
+     */
     private ExpandableLayout expandableLayout0, expandableLayout1, expandableLayout2, expandableLayout3;
 
+    /**
+     * After the onCreate() is called (in the Fragment), the Fragment's
+     * onCreateView() is called. You can assign your View variables and do
+     * any graphical initialisations. You are expected to return a View from
+     * this method, and this is the main UI view, but if your Fragment does not
+     * use any layouts or graphics, you can return null (happens by default if
+     * you don't override).
+     *
+     * @param inflater instantiates a layout XML file into its corresponding View objects.
+     * @param container a special view that can contain other views (called children)
+     * @param savedInstanceState  a saved instance of the application
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
+    /**
+     * A make sure that view is fully created.
+     *
+     * @param view a view of the application
+     * @param savedInstanceState  a saved instance of the application
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -106,10 +168,28 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         buttonBack.setOnClickListener(this);
     }
 
+    /**
+     * When the user clicks a button, the Button object receives an on-click event.
+     * <p>
+     * If you use this event handler in your code, make sure that you are
+     * having that button in your MainActivity. It won’t work if you use this event
+     * handler in fragment because onClick attribute only works in Activity.
+     *
+     * @param  v  a view of the application
+     */
     @Override
     public void onClick(View v) {
+
+        /**
+         * Different views to set up
+         * based on which buttons have
+         * been pressed.
+         */
         switch (v.getId()) {
 
+            /**
+             * Case of password reset
+             */
             case R.id.sending_pass_reset_button:
                 expandableLayout0.expand();
                 expandableLayout1.collapse();
@@ -117,6 +197,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 expandableLayout3.collapse();
                 break;
 
+            /**
+             * Case of email reset
+             */
             case R.id.change_email_button:
                 expandableLayout0.collapse();
                 expandableLayout1.expand();
@@ -124,6 +207,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 expandableLayout3.collapse();
                 break;
 
+            /**
+             * Password reset button clicked
+             */
             case R.id.change_password_button:
                 expandableLayout0.collapse();
                 expandableLayout1.collapse();
@@ -131,6 +217,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 expandableLayout3.collapse();
                 break;
 
+            /**
+             * Case of user reset
+             */
             case R.id.remove_user_button:
                 expandableLayout0.collapse();
                 expandableLayout1.collapse();
@@ -138,6 +227,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 expandableLayout3.expand();
                 break;
 
+            /**
+             * Case of changing email
+             */
             case R.id.changeEmail:
                 progressBar.setVisibility(View.VISIBLE);
                 if (user != null && !newEmail.getText().toString().trim().equals("")) {
@@ -161,6 +253,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
 
+            /**
+             * Case of changing password
+             */
             case R.id.changePass:
                 progressBar.setVisibility(View.VISIBLE);
                 if (user != null && !newPassword.getText().toString().trim().equals("")) {
@@ -189,6 +284,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
 
+            /**
+             * Case of sending updated user data
+             */
             case R.id.send:
                 progressBar.setVisibility(View.VISIBLE);
                 if (!oldEmail.getText().toString().trim().equals("")) {
@@ -211,6 +309,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
 
+            /**
+             * Case of removing existing user data
+             */
             case R.id.remove:
                 progressBar.setVisibility(View.VISIBLE);
                 if (user != null) {
@@ -233,9 +334,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                             });
                 }
                 break;
+            /**
+             * Case of signing out
+             */
             case R.id.sign_out:
                 signOut();
                 break;
+
+            /**
+             * Case of back button clicked
+             */
             case R.id.button_back:
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().popBackStackImmediate();
@@ -244,24 +352,42 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    //sign out method
+    /**
+     *  Method to handle signing the user out.
+     */
     public void signOut() {
         auth.signOut();
     }
 
-
+    /**
+     * This is the state in which the app interacts with the user.
+     * The app stays in this state until something happens to take focus
+     * away from the app. Such as receiving a phone call.
+     */
     @Override
     public void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * Calls when the activity is getting visible to user. ex:- when activity
+     * loading for first time, coming back from another activity, coming
+     * foreground from minimized state, in screen rotation, when turn on the
+     * display from sleep state etc. If you are using BroadcastReceivers you have to
+     * register them here.
+     */
     @Override
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
     }
 
+    /**
+     * When your activity is no longer visible to the user, it has entered the
+     * stopped state. In the onStop() method, the app can release almost all
+     * resources that aren’t needed while the user is not using it.
+     */
     @Override
     public void onStop() {
         super.onStop();

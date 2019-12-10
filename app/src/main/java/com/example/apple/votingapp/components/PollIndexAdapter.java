@@ -12,20 +12,59 @@ import com.example.apple.votingapp.R;
 
 import java.util.List;
 
+/**
+ * Helper class in the construction of the PollFragment.
+ *
+ * @author Rayyan Nasr
+ * @author Jihad Eddine Al Khrufan
+ * @version %I%, %G%
+ * @since 1.0
+ */
 public class PollIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    /**
+     *
+     */
     private List<String> mList;
+
+    /**
+     *
+     */
     private View mSelectedView = null;
+
+    /**
+     * The Click listener.
+     */
     ClickListener clickListener;
 
+    /**
+     * Instantiates a new Poll index adapter.
+     *
+     * @param list the list
+     */
     public PollIndexAdapter(List<String> list) {
         this.mList = list;
     }
 
+    /**
+     * Sets click listener.
+     *
+     * @param clickListener the click listener
+     */
     public void setClickListener(PollIndexAdapter.ClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
+    /**
+     * Called when RecyclerView needs a new RecyclerView.ViewHolder
+     * of the given type to represent an item. This new ViewHolder
+     * should be constructed with a new View that can represent the
+     * items of the given type. You can either create a new View manually
+     * or inflate it from an XML layout file.
+     *
+     * @param viewGroup The ViewGroup into which the new View will be added
+     * @param i given position
+     */
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -33,11 +72,19 @@ public class PollIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return new PollIndexHolder(view);
     }
 
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     * This method should update the contents of the itemView to reflect the
+     * item at the given position.
+     *
+     * @param viewHolder The ViewGroup into which the new View will be added
+     * @param i given position
+     */
     @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
 
-        ((PollIndexHolder) viewHolder).pollIndex.setText(String.valueOf(i));
+        ((PollIndexHolder) viewHolder).pollIndex.setText(String.valueOf(i+1));
 
         // This block handles selecting one and only one subcategory
         if (mSelectedView == null) {
@@ -64,10 +111,23 @@ public class PollIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         });
     }
 
+    /**
+     * The interface Click listener.
+     */
     public interface ClickListener {
+        /**
+         * On item click.
+         *
+         * @param position the position
+         */
         void onItemClick(int position);
     }
 
+    /**
+     * Sets selected.
+     *
+     * @param view the view
+     */
     @SuppressLint("NewApi")
     public void setSelected(View view) {
         view.performClick();
@@ -79,9 +139,20 @@ public class PollIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return mList == null ? 0 : mList.size();
     }
 
+    /**
+     * The type Poll index holder.
+     */
     public class PollIndexHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Poll index.
+         */
         TextView pollIndex;
 
+        /**
+         * Instantiates a new Poll index holder.
+         *
+         * @param itemView the item view
+         */
         PollIndexHolder(@NonNull View itemView) {
             super(itemView);
             pollIndex = itemView.findViewById(R.id.poll_index);

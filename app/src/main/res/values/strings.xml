@@ -40,11 +40,14 @@
     <string name="delete_your_account">Delete Your Account</string>
     <string name="poll_id">Poll ID</string>
     <string name="votes">Votes:</string>
-    <string name="downvote">Downvote</string>
-    <string name="upvote">Upvote</string>
+    <string name="option1">Option1</string>
+    <string name="option2">Option2</string>
     <string name="poll_question">Poll Question</string>
     <string name="_0">0</string>
     <string name="btn_start_poll_session">Start Poll Session</string>
     <string name="poll_session">Polling Session</string>
     <string name="finish">Finish</string>
+    <string name="option3">Option3</string>
+    <string name="option4">Option4</string>
+    <string name="btn_view_results">Check Poll Results</string>
 </resources>

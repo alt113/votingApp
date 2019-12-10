@@ -28,20 +28,39 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@id/top">
 
-        <Button
-            android:id="@+id/button_start_poll_session"
-            style="?android:textAppearanceSmall"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@drawable/white_border_transparent_bkg"
-            android:text="@string/btn_start_poll_session"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="bold" />
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_start_poll_session"
+                style="?android:textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/white_border_button_selector"
+                android:text="@string/btn_start_poll_session"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_check_poll_results"
+                style="?android:textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/white_border_button_selector"
+                android:text="@string/btn_view_results"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+        </LinearLayout>
     </ScrollView>
 
     <ProgressBar
