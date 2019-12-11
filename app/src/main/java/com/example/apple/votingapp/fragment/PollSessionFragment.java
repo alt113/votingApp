@@ -90,12 +90,14 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
     /**
      * New instance poll session fragment.
      *
-     * @param mode 1 for session, 2 for results
+     * @param mode               1 for session, 2 for results
+     * @param previousSelections hashmap with all selected options
      * @return the poll fragment
      */
-    public static PollSessionFragment newInstance(Integer mode) {
+    public static PollSessionFragment newInstance(Integer mode, HashMap<String, Integer> previousSelections) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.MODE, mode);
+        args.putSerializable(Constants.PREVIOUS_SELECTIONS, previousSelections);
         PollSessionFragment fragment = new PollSessionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -106,6 +108,8 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mode = (Integer) getArguments().getSerializable(Constants.MODE);
+            if (getArguments().getSerializable(Constants.PREVIOUS_SELECTIONS) != null)
+                previousSelections = (HashMap<String, Integer>) getArguments().getSerializable(Constants.PREVIOUS_SELECTIONS);
         }
     }
 
@@ -181,7 +185,7 @@ public class PollSessionFragment extends Fragment implements View.OnClickListene
         pollsViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                return PollFragment.newInstance(policies.get(i), keys.get(i), previousSelections.get(keys.get(i)),mode);
+                return PollFragment.newInstance(policies.get(i), keys.get(i), previousSelections.get(keys.get(i)), mode);
             }
 
             @Override

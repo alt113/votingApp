@@ -1,5 +1,6 @@
 package com.example.apple.votingapp.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,13 @@ import com.example.apple.votingapp.fragment.SettingsFragment;
 import com.example.apple.votingapp.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
 /**
  * MainAcitivity is the base view for all verified users
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     protected Button buttonCheckResults;
     private PollSessionFragment pollSessionFragment;
+    HashMap<String, Integer> pollSelections = new HashMap<>();
 
     /**
      * This is the state in which the app interacts with the user. The app stays in
@@ -95,6 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
+        try {
+            loadSelectionsFromCache();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         buttonSettings = findViewById(R.id.button_settings);
         buttonStartPollSession = findViewById(R.id.button_start_poll_session);
@@ -153,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_start_poll_session:
                 if (getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_POLL_SESSION) == null) {
-                    pollSessionFragment = PollSessionFragment.newInstance(1);
+                    pollSessionFragment = PollSessionFragment.newInstance(1, pollSelections);
                     getSupportFragmentManager()
                             .beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -162,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_check_poll_results:
                 if (getSupportFragmentManager().findFragmentByTag(Constants.FRAGMENT_POLL_SESSION) == null) {
-                    pollSessionFragment = PollSessionFragment.newInstance(2);
+                    pollSessionFragment = PollSessionFragment.newInstance(2, null);
                     getSupportFragmentManager()
                             .beginTransaction()
                             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -175,7 +189,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void updatePreviousOptions(String key, int option) {
         if (pollSessionFragment != null) {
+            pollSelections.put(key, option);
             pollSessionFragment.updateOptionsList(key, option);
+            try {
+                saveSelectionsToCache();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Saved user selections in cache so the user does not make multiple selections
+     *
+     * @throws IOException
+     */
+    private void saveSelectionsToCache() throws IOException {
+        FileOutputStream stream = null;
+        try {
+            stream = this.openFileOutput(Constants.PREVIOUS_SELECTIONS, Context.MODE_PRIVATE);
+            ObjectOutputStream dout = new ObjectOutputStream(stream);
+            dout.writeObject(pollSelections);
+            dout.flush();
+            stream.getFD().sync();
+        } catch (IOException e) { //Do something intelligent
+        } finally {
+
+            if (stream != null) {
+                stream.close();
+            }
+        }
+    }
+
+    /**
+     * loads previously saved user selections
+     *
+     * @throws IOException
+     */
+    private void loadSelectionsFromCache() throws IOException {
+        FileInputStream stream = null;
+        try {
+            stream = this.openFileInput(Constants.PREVIOUS_SELECTIONS);
+            ObjectInputStream din = new ObjectInputStream(stream);
+            try {
+                pollSelections = (HashMap<String, Integer>) din.readObject();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            stream.getFD().sync();
+        } catch (IOException e) { //Do something intelligent
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
         }
     }
 }
